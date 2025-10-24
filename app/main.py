@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Any
 from functools import wraps
 
 
@@ -7,7 +7,7 @@ def cache(func: Callable) -> Callable:
     cached_args = {}
 
     @wraps(func)
-    def wrapper(*args, **kwargs) -> int:
+    def wrapper(*args, **kwargs) -> Any:
         key = (args, tuple(sorted(kwargs.items())))
         if key in cached_args:
             print("Getting from cache")
