@@ -7,15 +7,14 @@ def cache(func: Callable) -> Callable:
     cached_args = {}
 
     @wraps(func)
-    def wrapper(*args) -> int:
-        nonlocal cached_args
-        key = (args, )
+    def wrapper(*args, **kwargs) -> int:
+        key = (args, tuple(sorted(kwargs.items())))
         if key in cached_args:
             print("Getting from cache")
             res = cached_args[key]
         else:
             print("Calculating new result")
-            res = func(*args)
+            res = func(*args, **kwargs)
             cached_args[key] = res
 
         return res
